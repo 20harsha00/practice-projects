@@ -3,58 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - MyApp</title>
+    <title>Home - MyApp Demo Products</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: Helvetica, Arial, sans-serif;
-            margin: 0;
-        }
-        .home-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .welcome-box {
-            background: #fff;
-            padding: 40px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-        .welcome-box h1 {
-            color: #1877f2;
-            margin-bottom: 20px;
-        }
-        .welcome-box p {
-            color: #333;
-            font-size: 18px;
-        }
-        .logout-btn {
-            margin-top: 30px;
-            background: #1877f2;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 30px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .logout-btn:hover {
-            background: #145db2;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="home-container">
-        <div class="welcome-box">
-            <h1>Welcome to MyApp!</h1>
-            <p>This is a demo home page. You have successfully logged in.</p>
-            <button class="logout-btn" onclick="window.location.href='index.html'">Log Out</button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">MyApp</a>
+        <span class="navbar-text ml-auto">Welcome, User!</span>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h2 class="mb-4">Today's Deals</h2>
+        <div class="row">
+            <!-- Product 1 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" alt="Headphones" class="product-image img-fluid">
+                    <div class="product-title">Wireless Bluetooth Headphones</div>
+                    <div class="product-price">$49.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Smart Watch" class="product-image img-fluid">
+                    <div class="product-title">Smart Fitness Watch</div>
+                    <div class="product-price">$89.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=400&q=80" alt="Coffee Maker" class="product-image img-fluid">
+                    <div class="product-title">Automatic Coffee Maker</div>
+                    <div class="product-price">$69.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Product 4 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Backpack" class="product-image img-fluid">
+                    <div class="product-title">Travel Backpack</div>
+                    <div class="product-price">$39.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1512499617640-c2f999098c01?auto=format&fit=crop&w=400&q=80" alt="Sneakers" class="product-image img-fluid">
+                    <div class="product-title">Men's Running Sneakers</div>
+                    <div class="product-price">$59.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="col-md-4">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Camera" class="product-image img-fluid">
+                    <div class="product-title">Digital SLR Camera</div>
+                    <div class="product-price">$299.99</div>
+                    <button class="btn btn-add-cart btn-block">Add to Cart</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2023 MyApp. All Rights Reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

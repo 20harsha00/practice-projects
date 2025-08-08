@@ -1,53 +1,13 @@
+/* filepath: c:\Users\HARSHA\gitt\practice-projects\style.css */
 body {
     background-color: #eaeded;
     font-family: Arial, Helvetica, sans-serif;
-    min-height: 100vh;
 }
 .navbar {
     background-color: #232f3e;
 }
 .navbar-brand, .nav-link, .navbar-text {
     color: #fff !important;
-}
-.main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-}
-.login-form {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    padding: 32px 24px;
-    width: 100%;
-    max-width: 350px;
-}
-.btn-login {
-    background-color: #1877f2;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-.btn-login:hover {
-    background-color: #145db2;
-}
-.btn-create-account {
-    background-color: #42b72a;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 4px;
-}
-.btn-create-account:hover {
-    background-color: #36a420;
-}
-.forgot-password-link {
-    color: #1877f2;
-    text-decoration: none;
-}
-.forgot-password-link:hover {
-    text-decoration: underline;
 }
 .product-card {
     background: #fff;
@@ -95,6 +55,3 @@ body {
     background: #232f3e;
     color: #fff;
     text-align: center;
-    padding: 1rem 0;
-    margin-top: 40px;
-}
