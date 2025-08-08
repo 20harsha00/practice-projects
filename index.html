@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - MyApp</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0f2f5; /* Facebook's light gray background */
+            font-family: Helvetica, Arial, sans-serif; /* Common sans-serif font */
+            margin: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 396px; /* Facebook's login form width */
+            padding: 20px;
+            background-color: #ffffff; /* White background for the form */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1); /* Facebook-like shadow */
+            text-align: center;
+        }
+        .login-form h2 {
+            margin-bottom: 20px;
+            color: #1c1e21; /* Dark gray text */
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .login-form .form-control {
+            border-radius: 6px;
+            border: 1px solid #dddfe2;
+            font-size: 17px;
+            padding: 14px 16px;
+            margin-bottom: 12px; /* Spacing between inputs */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .login-form .form-control:focus {
+            border-color: #1877f2; /* Blue border on focus */
+            box-shadow: 0 0 0 2px #e7f3ff; /* Light blue glow on focus */
+            outline: none;
+        }
+        .login-form .btn { /* General button styling */
+            border-radius: 6px;
+            font-weight: bold;
+            padding: 0 16px;
+            width: 100%;
+            line-height: 48px;
+            box-sizing: border-box;
+            border: none;
+        }
+        .login-form .btn-login {
+            background-color: red; /* Facebook blue */
+            color: white;
+            font-size: 20px;
+        }
+        .login-form .btn-login:hover {
+            background-color: #166fe5; /* Slightly darker blue on hover */
+        }
+        .login-form .btn-create-account {
+            background-color: #42b72a; /* Facebook green */
+            color: white;
+            font-size: 17px;
+            margin-top: 16px;
+        }
+        .login-form .btn-create-account:hover {
+            background-color: #36a420; /* Slightly darker green on hover */
+        }
+        .login-form .forgot-password-link {
+            color: #1877f2;
+            font-size: 14px;
+            text-decoration: none;
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 20px;
+        }
+        .login-form .forgot-password-link:hover {
+            text-decoration: underline;
+        }
+        .login-form hr {
+            border: 0;
+            border-top: 1px solid #dddfe2;
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #ffffff;
+            color: #737373; /* Gray text */
+            padding: 2rem 0; /* More padding for footer */
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px solid #dddfe2; /* Optional: light border above footer */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.login-form form');
+            const emailInput = document.getElementById('emailInput');
+            const passwordInput = document.getElementById('passwordInput');
+            
+            // Create a message element
+            const message = document.createElement('div');
+            message.style.margin = '10px 0';
+            form.insertBefore(message, form.firstChild);
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                message.textContent = '';
+                message.style.color = 'red';
+                if (!emailInput.value || !passwordInput.value) {
+                    message.textContent = 'Please fill in both fields.';
+                } else {
+                    // Redirect to demo home page
+                    window.location.href = 'home.html';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="login-form">
+            <h2 class="mb-4">Log In</h2>
+            <form>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="emailInput" placeholder="Email address or phone number" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-login btn-block">Log In</button>
+                <div class="text-center mt-3">
+                    <a href="#" class="forgot-password-link">Forgotten password?</a>
+                </div>
+                <hr>
+                <button type="button" class="btn btn-create-account btn-block">Create New Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <span>&copy; 2023 MyApp. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
