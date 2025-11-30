@@ -1,0 +1,580 @@
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from './ApprovalCategories.module.css';
+import {
+    MdFolder,
+    MdDescription,
+    MdShoppingCart,
+    MdSwapHoriz,
+    MdAttachMoney,
+    MdReceiptLong,
+    MdAirlineSeatReclineNormal,
+} from 'react-icons/md';
+import { FaWrench } from 'react-icons/fa';
+import { FiChevronRight } from 'react-icons/fi';
+
+interface ApprovalCategory {
+    id: string;
+    name: string;
+    count: number;
+    icon: React.ReactNode;
+    color: string;
+}
+
+const APPROVAL_CATEGORIES: ApprovalCategory[] = [
+    { id: 'po', name: 'PURCHASE\nORDERS', count: 55, icon: <MdFolder />, color: '#10B981' },
+    { id: 'ca', name: 'CREDIT\nAPPROVAL', count: 39, icon: <MdDescription />, color: '#F97316' },
+    { id: 'se', name: 'SERVICE ENTRY', count: 23, icon: <MdShoppingCart />, color: '#06B6D4' },
+    { id: 'jcs', name: 'JCS', count: 4, icon: <FaWrench />, color: '#9CA3AF' },
+    { id: 'contracts', name: 'CONTRACTS', count: 2, icon: <MdReceiptLong />, color: '#FBBF24' },
+    { id: 'partnerhub', name: 'PARTNERHUB', count: 2, icon: <MdDescription />, color: '#EF4444' },
+    { id: 'shopping', name: 'SHOPPING CART', count: 0, icon: <MdShoppingCart />, color: '#EC4899' },
+    { id: 're', name: 'REVENUE\nEXPENSES', count: 0, icon: <MdAttachMoney />, color: '#DC2626' },
+    { id: 'rgp', name: 'RGP', count: 0, icon: <MdSwapHoriz />, color: '#F59E0B' },
+    { id: 'nrgp', name: 'NRGP', count: 0, icon: <MdSwapHoriz />, color: '#EA580C' },
+    { id: 'leaves', name: 'LEAVES', count: 0, icon: <MdReceiptLong />, color: '#DC2626' },
+    { id: 'er', name: 'EMPLOYEE\nREIMBURSEMENT', count: 0, icon: <MdAirlineSeatReclineNormal />, color: '#D1663D' },
+];
+
+export default function ApprovalCategories() {
+    const router = useRouter();
+
+    const [showMenuPanel, setShowMenuPanel] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    const handleCategoryClick = (categoryId: string) => {
+        router.push(`/mobile/approvals?category=${categoryId}`);
+    };
+
+    const totalPending = APPROVAL_CATEGORIES.reduce(
+        (sum, cat) => sum + cat.count,
+        0
+    );
+
+    const handleReportIssue = () => {
+        setShowMenuPanel(false);
+        router.push('/mobile/report-issue');
+    };
+
+    const handleLogoutConfirm = () => {
+        setShowLogoutModal(false);
+        // router.push('/login');
+    };
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <span
+                    className={styles.menuIcon}
+                    onClick={() => setShowMenuPanel(true)}
+                >
+                    ☰
+                </span>
+                <h1 className={styles.headerTitle}>Approvals</h1>
+                <span
+                    className={styles.powerIcon}
+                    onClick={() => setShowLogoutModal(true)}
+                >
+                    ⏻
+                </span>
+            </div>
+            <div className={styles.categoriesGrid}>
+                {APPROVAL_CATEGORIES.map((category) => (
+                    <button
+                        key={category.id}
+                        className={styles.categoryRow}
+                        onClick={() => handleCategoryClick(category.id)}
+                    >
+                        <div
+                            className={styles.categoryIconWrapper}
+                            style={{ color: category.color }}
+                        >
+                            {category.icon}
+                        </div>
+
+                        <div className={styles.categoryInfo}>
+                            <span className={styles.categoryName}>{category.name}</span>
+                        </div>
+
+                        <div className={styles.rightWrap}>
+                            {category.count > 0 && (
+                                <span className={styles.categoryBadge}>{category.count}</span>
+                            )}
+                            <FiChevronRight className={styles.categoryArrow} />
+                        </div>
+                    </button>
+                ))}
+            </div>
+            {showMenuPanel && (
+                <div
+                    className={styles.menuOverlay}
+                    onClick={() => setShowMenuPanel(false)}
+                >
+                    <div
+                        className={styles.menuPanel}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className={styles.menuTopBar}>
+                            <span className={styles.menuGreeting}>
+                                Hello Md Nasrullah Khan !
+                            </span>
+                        </div>
+
+                        <div className={styles.menuList}>
+                            <button
+                                className={styles.menuItem}
+                                onClick={() => setShowMenuPanel(false)}
+                            >
+                                <div className={styles.menuItemIcon}>
+                                    <MdDescription />
+                                </div>
+                                <span className={styles.menuItemTitle}>PENDING APPROVALS</span>
+                                <span className={styles.menuItemBadge}>{totalPending}</span>
+                            </button>
+
+                            <button
+                                className={styles.menuItem}
+                                onClick={handleReportIssue}
+                            >
+                                <div className={styles.menuItemIcon}>
+                                    <MdDescription />
+                                </div>
+                                <span className={styles.menuItemTitle}>REPORT ISSUE</span>
+                            </button>
+                        </div>
+
+                        <div className={styles.menuVersion}>
+                            Version 3.2.0.9.6 (QA)
+                        </div>
+                    </div>
+                </div>
+            )}
+            {showLogoutModal && (
+                <div
+                    className={styles.modalOverlay}
+                    onClick={() => setShowLogoutModal(false)}
+                >
+                    <div
+                        className={styles.modalBox}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <p className={styles.modalMessage}>
+                            Are you sure you want to Logout?
+                        </p>
+
+                        <div className={styles.modalButtons}>
+                            <button
+                                className={styles.yesBtn}
+                                onClick={handleLogoutConfirm}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className={styles.noBtn}
+                                onClick={() => setShowLogoutModal(false)}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+
+
+
+.container {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #333;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 16px 16px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.menuIcon {
+  color: #1e40af;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.headerTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e40af;
+  margin: 0;
+  letter-spacing: -0.3px;
+  text-align: left;
+}
+
+.powerIcon {
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.menuIcon:active,
+.powerIcon:active {
+  opacity: 0.7;
+}
+
+.categoriesGrid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.categoryRow:last-child {
+  border-bottom: none;
+}
+
+.categoryRow:hover {
+  background: #f9fafb;
+}
+
+.categoryRow:active {
+  background: #f3f4f6;
+}
+
+.categoryIconWrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.categoryInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.categoryName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  white-space: pre-line;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.rightWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: darkblue;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.categoryArrow {
+  font-size: 22px;
+  color: #46494e;
+  flex-shrink: 0;
+}
+
+.categoriesGrid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.categoriesGrid::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.categoriesGrid::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.categoriesGrid::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px;
+  z-index: 200;
+}
+
+.menuPanel {
+  width: 90%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.menuTopBar {
+  background: #304ffe;
+  padding: 12px 18px;
+}
+
+.menuGreeting {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.menuList {
+  padding: 10px 0 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.menuItemIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-right: 12px;
+  color: #4b5563;
+}
+
+.menuItemTitle {
+  flex: 1;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.menuItemBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #22d3ee;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.menuVersion {
+  padding: 14px 18px 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+}
+
+.modalBox {
+  width: 85%;
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px 20px 24px;
+  text-align: center;
+}
+
+.modalMessage {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 34px;
+  color: #111827;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.yesBtn {
+  background: #304ffe;
+  color: #ffffff;
+  border: none;
+  padding: 12px 38px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.noBtn {
+  background: #9ca3af;
+  color: #ffffff;
+  border: none;
+  padding: 12px 38px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.yesBtn:active,
+.noBtn:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 14px 14px;
+  }
+
+  .headerTitle {
+    font-size: 20px;
+  }
+
+  .menuIcon,
+  .powerIcon {
+    font-size: 20px;
+  }
+
+  .categoryRow {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .categoryIconWrapper {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+
+  .categoryName {
+    font-size: 13px;
+  }
+
+  .categoryBadge {
+    min-width: 36px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .menuGreeting {
+    font-size: 17px;
+  }
+
+  .modalBox {
+    width: 90%;
+    padding: 24px 18px 20px;
+  }
+
+  .modalMessage {
+    font-size: 16px;
+  }
+
+  .yesBtn,
+  .noBtn {
+    padding: 10px 30px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .headerTitle {
+    font-size: 18px;
+  }
+
+  .menuIcon,
+  .powerIcon {
+    font-size: 18px;
+  }
+
+  .categoryName {
+    font-size: 12px;
+  }
+
+  .menuGreeting {
+    font-size: 16px;
+  }
+
+  .modalMessage {
+    font-size: 15px;
+  }
+}
+
