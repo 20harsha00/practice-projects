@@ -719,3 +719,48 @@
 .sheetDoneBtn:active {
   opacity: 0.9;
 }
+export interface JCSData {
+  id: string;
+  jcsNo: string;
+  raisedBy: string;
+  plant: string;
+  value: string;
+  currency: string;
+  createDate: string;
+  status: string;
+}
+
+export const approvals: JCSData[] = [
+  { id: '4001276663', jcsNo: '4001276663', raisedBy: 'Electrolab (India) Pvt. Ltd.', plant: '4003', value: '11,00,000.00', currency: 'INR', createDate: '20-Jul-2022', status: 'Overdue' },
+  { id: '4001276662', jcsNo: '4001276662', raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT', plant: '2008', value: '5,01,000.00', currency: 'INR', createDate: '20-Jul-2022', status: 'Pending' },
+  { id: '4001276661', jcsNo: '4001276661', raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT', plant: '1009', value: '11,00,000.00', currency: 'INR', createDate: '20-Jul-2022', status: 'Approved' },
+  { id: '4001276425', jcsNo: '4001276425', raisedBy: 'Green Park Hospitality Services Pvt', plant: '4015', value: '8,50,000.00', currency: 'INR', createDate: '06-Jun-2022', status: 'Pending' },
+];
+
+export const attachments = [
+  { id: 1, name: '01.pdf', type: 'pdf' },
+  { id: 2, name: '00P2i000005oUL1EAM', type: 'file' },
+  { id: 3, name: 'ScreenshotTemplate21 (1).docx', type: 'docx' },
+  { id: 4, name: 'N2.doc', type: 'doc' },
+  { id: 5, name: 'N2.doc', type: 'doc' },
+  { id: 6, name: '14 at 4.46.18 PM.png', type: 'png' },
+  { id: 7, name: 'incident (2).xlsx', type: 'xlsx' },
+  { id: 8, name: 'incident (2).xlsx', type: 'xlsx' },
+  { id: 9, name: 'image003.png', type: 'png' },
+  { id: 10, name: 'Approvals (1).xlsx', type: 'xlsx' },
+  { id: 11, name: 'incident (3).xlsx', type: 'xlsx' },
+];
+
+export const moreDetails = {
+  purchaseOrder: '5600009981',
+  postFinanceApproval: 'P90011211'
+};
+
+export const lineItems = [
+  {
+    id: 1,
+    title: 'AMC for Analytical Instruments',
+    description: 'Annual maintenance contract'
+  },
+];
+src\app\jcs-details\[id]\data.ts
