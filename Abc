@@ -1,0 +1,618 @@
+ â»
+
+'use client';
+
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import styles from './ApprovalList.module.css';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+
+interface Approval {
+    id: string;
+    date: string;
+    raisedBy: string;
+    plant: string;
+    value: string;
+    currency: string;
+}
+
+export default function ApprovalList() {
+    const router = useRouter();
+
+    const approvals: Approval[] = [
+        {
+            id: '4001276663',
+            date: '20-Jul-2022',
+            raisedBy: 'Electrolab (India) Pvt. Ltd.',
+            plant: '4003',
+            value: '11,00,000.00',
+            currency: 'INR',
+        },
+        {
+            id: '4001276662',
+            date: '20-Jul-2022',
+            raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT',
+            plant: '2008',
+            value: '5,01,000.00',
+            currency: 'INR',
+        },
+        {
+            id: '4001276661',
+            date: '20-Jul-2022',
+            raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT',
+            plant: '1009',
+            value: '11,00,000.00',
+            currency: 'INR',
+        },
+        {
+            id: '4001276425',
+            date: '06-Jun-2022',
+            raisedBy: 'Green Park Hospitality Services Pvt',
+            plant: '4015',
+            value: '8,50,000.00',
+            currency: 'INR',
+        },
+    ];
+
+    const handleViewDetails = (approval: Approval) => {
+        router.push(`/jcs-details/${approval.id}`);
+    };
+
+    return (
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.headerTop}>
+                    <FiChevronLeft
+                        size={24}
+                        className={styles.backIcon}
+                        onClick={() => router.back()}
+                    />
+                    <h1 className={styles.headerTitle}>Approval List</h1>
+                    <span className={styles.headerSpacer} />
+                </div>
+            </header>
+
+            <div className={styles.categorySection}>
+                <div className={styles.categoryHeader}>
+                    <span className={styles.categoryLabel}>MY APPROVALS</span>
+                </div>
+            </div>
+
+            <div className={styles.approvalsList}>
+                {approvals.map((approval) => (
+                    <div key={approval.id} className={styles.approvalCard}>
+                        <div className={styles.cardTop}>
+                            <span className={styles.approvalId}>{approval.id}</span>
+                            <span className={styles.approvalDate}>{approval.date}</span>
+                        </div>
+
+                        <div className={styles.cardBody}>
+                            <div className={styles.cardRow}>
+                                <div className={styles.cardField}>
+                                    <span className={styles.fieldLabel}>RAISED BY</span>
+                                    <span className={styles.fieldValue}>{approval.raisedBy}</span>
+                                </div>
+                                <div className={styles.cardField}>
+                                    <span className={styles.fieldLabel}>PLANT</span>
+                                    <span className={styles.fieldValue}>{approval.plant}</span>
+                                </div>
+                            </div>
+
+                            <div className={styles.cardRow}>
+                                <div className={styles.cardFieldFull}>
+                                    <span className={styles.fieldLabel}>OF VALUE</span>
+                                    <span className={styles.fieldValueAmount}>
+                                        {approval.value}{' '}
+                                        <span className={styles.currency}>{approval.currency}</span>
+                                    </span>
+                                </div>
+
+                                <button
+                                    className={styles.viewButton}
+                                    onClick={() => handleViewDetails(approval)}
+                                    aria-label={`View ${approval.id}`}
+                                >
+                                    <FiChevronRight size={20} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f5;
+  color: #333;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.backIcon {
+  color: #6b7280;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  flex: 1;
+}
+
+.headerSpacer {
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.categorySection {
+  padding: 12px 20px;
+  background: #ffffff;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.categoryLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.approvalsList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.approvalCard {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.approvalCard:active {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.approvalId {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.approvalDate {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.cardBody {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.cardField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cardFieldFull {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.fieldValue {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.fieldValueAmount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.currency {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-left: 2px;
+}
+
+.viewButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  flex-shrink: 0;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.viewButton:active {
+  color: #1f2937;
+}
+  
+.approvalsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.approvalsList::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.approvalsList::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.approvalsList::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 12px 16px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+
+  .categorySection {
+    padding: 10px 16px;
+  }
+
+  .approvalsList {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .approvalCard {
+    border-radius: 6px;
+  }
+
+  .cardTop {
+    padding: 10px 14px;
+  }
+
+  .cardBody {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .fieldLabel {
+    font-size: 10px;
+  }
+
+  .fieldValue {
+    font-size: 12px;
+  }
+}
+
+
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { FiChevronLeft, FiEye, FiX, FiCheck } from 'react-icons/fi';
+import {
+    BsFileEarmarkPdf,
+    BsFileEarmarkWord,
+    BsFileEarmarkExcel,
+    BsFileEarmarkImage,
+} from 'react-icons/bs';
+import styles from './JCSDetails.module.css';
+import { approvals, attachments, moreDetails, lineItems } from './data';
+
+type JcsData = typeof approvals[0];
+
+interface JCSDetailsClientProps {
+    jcsData: JcsData | undefined;
+    id: string;
+    initialOpenState: boolean;
+}
+
+export default function JCSDetailsClient({ jcsData, id, initialOpenState }: JCSDetailsClientProps) {
+    const router = useRouter();
+    const [expandedLineItem, setExpandedLineItem] = useState<number | null>(null);
+
+    const [showApproveModal, setShowApproveModal] = useState(initialOpenState);
+    const [comment, setComment] = useState('');
+    const [showSuccessSheet, setShowSuccessSheet] = useState(false);
+
+    useEffect(() => {
+        if (!showApproveModal && initialOpenState) {
+            router.replace(`/jcs-details/${id}`, { scroll: false });
+        }
+    }, [showApproveModal, initialOpenState, id, router]);
+
+    if (!jcsData) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <div className={styles.headerTop}>
+                        <FiChevronLeft size={28} className={styles.backIcon} onClick={() => router.back()} />
+                        <h1 className={styles.headerTitle}>JCS Details</h1>
+                    </div>
+                </div>
+                <div className={styles.errorMessage}>JCS with ID {id} not found.</div>
+            </div>
+        );
+    }
+
+    const getFileIcon = (type: string) => {
+        switch (type) {
+            case 'pdf': return <BsFileEarmarkPdf size={16} />;
+            case 'docx':
+            case 'doc': return <BsFileEarmarkWord size={16} />;
+            case 'xlsx': return <BsFileEarmarkExcel size={16} />;
+            case 'png': return <BsFileEarmarkImage size={16} />;
+            default: return <FiEye size={16} />;
+        }
+    };
+
+    const closeModal = () => {
+        setShowApproveModal(false);
+    };
+
+    const handleReject = () => console.log('Reject clicked');
+
+    const submitApprove = async () => {
+        console.log('Approved with comment:', comment);
+
+        setShowApproveModal(false);
+        setShowSuccessSheet(true);
+    };
+
+    const closeSuccess = () => {
+        setShowSuccessSheet(false);
+    };
+
+    const handleViewDetails = (from: 'pfa' | 'pre' | 'reviewer', value?: string) => {
+        const q = new URLSearchParams({
+            from,
+            value: value ?? '',
+            jcsId: id, 
+            pfa: moreDetails.postFinanceApproval ?? '',
+        });
+        router.push(`/add-reviewers?${q.toString()}`);
+    };
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <div className={styles.headerTop}>
+                    <FiChevronLeft size={28} className={styles.backIcon} onClick={() => router.back()} />
+                    <h1 className={styles.headerTitle}>JCS Details</h1>
+                </div>
+                <div className={styles.topInfo}>
+                    <div className={styles.infoRow}>
+                        <div className={styles.infoField}>
+                            <span className={styles.infoLabel}>JCS No</span>
+                            <span className={styles.infoValue}>{jcsData.jcsNo}</span>
+                        </div>
+                        <div className={styles.infoField}>
+                            <span className={styles.infoLabel}>Raised By</span>
+                            <span className={styles.infoValue}>{jcsData.raisedBy}</span>
+                        </div>
+                    </div>
+                    <div className={styles.infoRow}>
+                        <div className={styles.infoField}>
+                            <span className={styles.infoLabel}>Plant</span>
+                            <span className={styles.infoValue}>{jcsData.plant}</span>
+                        </div>
+                        <div className={styles.infoField}>
+                            <span className={styles.infoLabel}>Of Value</span>
+                            <span className={styles.infoValue}>
+                                {jcsData.value} <span className={styles.currency}>{jcsData.currency}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={styles.infoRow}>
+                        <div className={styles.infoField}>
+                            <span className={styles.infoLabel}>Create Date</span>
+                            <span className={styles.infoValue}>{jcsData.createDate}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.mainContent}>
+                <div className={styles.statusBadge}>
+                    <span className={styles.statusIcon}>â±</span>
+                    <span className={styles.statusText}>{jcsData.status}</span>
+                </div>
+
+                <section className={styles.section}>
+                    <div className={styles.sectionHeader}>
+                        <h2 className={styles.sectionTitle}>ATTACHMENTS</h2>
+                        <span className={styles.badge}>{attachments.length}</span>
+                    </div>
+                    <div className={styles.attachmentGrid}>
+                        {attachments.map((a) => (
+                            <button key={a.id} className={styles.attachmentItem}>
+                                {getFileIcon(a.type)} <span className={styles.attachmentName}>{a.name}</span>
+                            </button>
+                        ))}
+                    </div>
+                </section>
+
+                <section className={styles.section}>
+                    <h2 className={styles.sectionTitle}>MORE DETAILS</h2>
+                    <div className={styles.detailsGrid}>
+                        <div className={styles.detailField}>
+                            <span className={styles.detailLabel}>Purchase Order</span>
+                            <span className={styles.detailValue}>{moreDetails.purchaseOrder}</span>
+                        </div>
+                        <div className={styles.detailField}>
+                            <span className={styles.detailLabel}>Post Finance Approval</span>
+                            <span className={styles.detailValue}>{moreDetails.postFinanceApproval}</span>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section className={styles.section}>
+                    <div className={styles.sectionHeader}>
+                        <h2 className={styles.sectionTitle}>LINE ITEMS</h2>
+                        <span className={styles.badge}>{lineItems.length}</span>
+                    </div>
+
+                    {lineItems.map((item, idx) => {
+                        const isOpen = expandedLineItem === idx;
+                        return (
+                            <React.Fragment key={item.id}>
+                                <div
+                                    className={styles.lineItem}
+                                    onClick={() => setExpandedLineItem(isOpen ? null : idx)}
+                                >
+                                    <div className={styles.lineItemHeader}>
+                                        <span className={styles.lineItemTitle}>{item.title}</span>
+                                        <FiChevronLeft
+                                            className={`${styles.lineItemArrow} ${isOpen ? styles.rotated : ''}`}
+                                        />
+                                    </div>
+
+                                    <div className={styles.lineItemMeta}>
+                                        <div className={styles.metaCol}>
+                                            <div className={styles.metaLabel}>Price:</div>
+                                            <div className={styles.metaValue}>
+                                                1.000 <span className={styles.metaUnit}>EA</span>
+                                            </div>
+                                        </div>
+                                        <div className={styles.metaCol}>
+                                            <div className={styles.metaLabel}>Net Value:</div>
+                                            <div className={styles.metaValue}>
+                                                11,00,000.00 <span className={styles.metaUnit}>EA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {isOpen && (
+                                    <div className={styles.reviewerSection}>
+                                        <h3 className={styles.reviewerTitle}>REVIEWER DETAILS</h3>
+                                        <div className={styles.reviewerCard}>
+                                            <div className={styles.reviewerGrid}>
+                                                <div className={styles.reviewerField}>
+                                                    <div className={styles.reviewerLabel}>Purchase Order</div>
+                                                    <div className={styles.reviewerValueContainer}>
+                                                        <div className={styles.reviewerValue}>{moreDetails.purchaseOrder}</div>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.reviewerField}>
+                                                    <div className={styles.reviewerLabel}>Post Finance Approval</div>
+                                                    <div className={styles.reviewerValueContainer}>
+                                                        <div className={styles.reviewerValue}>{moreDetails.postFinanceApproval}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        );
+                    })}
+                </section>
+            </div>
+
+            <div className={styles.bottomActions}>
+                <button className={styles.actionBtn} onClick={handleReject}>
+                    <div className={`${styles.circleIcon} ${styles.rejectIcon}`}>
+                        <FiX size={22} />
+                    </div>
+                    <span className={styles.actionLabelReject}>REJECT</span>
+                </button>
+
+                <button
+                    className={styles.actionBtn}
+                    onClick={() => handleViewDetails('pfa', moreDetails.postFinanceApproval)}
+                >
+                    <div className={`${styles.circleIcon} ${styles.approveIcon}`}>
+                        <FiCheck size={22} />
+                    </div>
+                    <span className={styles.actionLabelApprove}>APPROVE</span>
+                </button>
+            </div>
+
+            {showApproveModal && (
+                <div className={styles.modalOverlay} role="dialog" aria-modal="true">
+                    <div className={styles.modal}>
+                        <button className={styles.closeBtn} onClick={closeModal} 
