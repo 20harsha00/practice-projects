@@ -1,0 +1,483 @@
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from './MobileApprovalsList.module.css';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+
+interface Approval {
+  id: string;
+  date: string;
+  raisedBy: string;
+  plant: string;
+  value: string;
+  currency: string;
+  color?: string;
+}
+
+export default function ApprovalsPage() {
+  const router = useRouter();
+  const [activeCategory, setActiveCategory] = useState('JCS');
+
+  const categories = [{ id: 'JCS', name: 'JCS', count: 4 }];
+
+  const approvals: Approval[] = [
+    {
+      id: '4001276663',
+      date: '20-Jul-2022',
+      raisedBy: 'Electrolab (India) Pvt. Ltd.',
+      plant: '4003',
+      value: '11,00,000.00',
+      currency: 'INR',
+    },
+    {
+      id: '4001276662',
+      date: '20-Jul-2022',
+      raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT',
+      plant: '2008',
+      value: '5,01,000.00',
+      currency: 'INR',
+    },
+    {
+      id: '4001276661',
+      date: '20-Jul-2022',
+      raisedBy: 'SODEXO INDIA SERVICES PRIVATE LIMIT',
+      plant: '1009',
+      value: '11,00,000.00',
+      currency: 'INR',
+    },
+    {
+      id: '4001276425',
+      date: '06-Jun-2022',
+      raisedBy: 'Green Park Hospitality Services Pvt',
+      plant: '4015',
+      value: '8,50,000.00',
+      currency: 'INR',
+    },
+  ];
+
+  const handleViewDetails = (approval: Approval) => {
+    router.push(`/jcs-details/${approval.id}`);
+  };
+
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div className={styles.headerTop}>
+          <FiChevronLeft
+            size={24}
+            className={styles.backIcon}
+            onClick={() => router.back()}
+          />
+          <h1 className={styles.headerTitle}>Approvals List</h1>
+          <span className={styles.headerSpacer} />
+        </div>
+      </header>
+
+      <div className={styles.categorySection}>
+        <div className={styles.categoryHeader}>
+          <span className={styles.categoryLabel}>MY APPROVALS</span>
+        </div>
+        <div className={styles.categoryTabs}>
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              className={`${styles.categoryTab} ${activeCategory === category.id ? styles.activeCategoryTab : ''
+                }`}
+              onClick={() => setActiveCategory(category.id)}
+            >
+              <span className={styles.categoryName}>{category.name}</span>
+              <span className={styles.categoryCount}>{category.count}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.approvalsList}>
+        {approvals.map((approval) => (
+          <div key={approval.id}
+            className={styles.approvalCard}
+            style={{ borderTopColor: approval.color || '#d32f2f' }}>
+
+            <div className={styles.cardTop}>
+              <span className={styles.approvalId}>{approval.id}</span>
+              <span className={styles.approvalDate}>{approval.date}</span>
+            </div>
+
+            <div className={styles.cardBody}>
+              <div className={styles.cardGrid}>
+                <div>
+                  <div className={styles.fieldLabel}>RAISED BY</div>
+                  <div className={styles.fieldValue}>{approval.raisedBy}</div>
+                </div>
+
+                <div>
+                  <div className={styles.fieldLabel}>PLANT</div>
+                  <div className={styles.fieldValuePlant}>{approval.plant}</div>
+                </div>
+              </div>
+
+              <div className={styles.cardValueRow}>
+                <div>
+                  <div className={styles.fieldLabel}>OF VALUE</div>
+                  <div className={styles.fieldValueAmount}>
+                    {approval.value}
+                    <span className={styles.currency}>{approval.currency}</span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                className={styles.viewButton}
+                onClick={() => handleViewDetails(approval)}
+                aria-label={`View ${approval.id}`}
+              >
+                <FiChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+.container {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backIcon {
+  color: #666666;
+  cursor: pointer;
+}
+
+.headerTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6b2d9e;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+  margin-right: 24px;
+}
+
+.headerSpacer {
+  width: 24px;
+  height: 24px;
+}
+
+.categorySection {
+  background-color: #ffffff;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.categoryHeader {
+  margin-bottom: 12px;
+}
+
+.categoryLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999999;
+  letter-spacing: 0.5px;
+}
+
+.categoryTabs {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.categoryTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.categoryTab {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+.categoryName {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.categoryCount {
+  background-color: #6b2d9e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+  min-width: 40px;
+  text-align: center;
+  margin-left: 12px;
+}
+.activeCategoryTab .categoryName {
+  color: #6b2d9e;
+}
+
+.approvalsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px 28px 16px;
+  box-sizing: border-box;
+}
+
+.approvalCard {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  border-top: 3px solid var(--card-color, #d32f2f); 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.approvalId {
+  display: inline-block;
+  background: #f3f3f3;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  letter-spacing: 0.2px;
+}
+.approvalDate {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cardBody {
+  padding: 14px 16px 28px 16px;
+  background: #fff; 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr 140px; 
+  gap: 12px;
+  align-items: start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  padding-bottom: 12px;
+   background-color: gainsboro
+}
+
+.fieldLabel {
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+.fieldValue {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0b0b0b;
+  line-height: 1.12;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.fieldValuePlant {
+  font-size: 20px;
+  font-weight: 800;
+  color: #000;
+  text-align: left;
+  align-self: center;
+}
+
+/* Value row */
+.cardValueRow {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.fieldValueAmount {
+  font-size: 20px;
+  font-weight: 800;
+  color: #000;
+}
+.currency {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.viewButton {
+  position: absolute;
+  right: 14px;
+  bottom: 23px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #304ffe;
+  color: #fff;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(48, 79, 254, 0.16);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  z-index: 2;
+}
+.viewButton:focus {
+  outline: 3px solid rgba(48, 79, 254, 0.18);
+  outline-offset: 2px;
+}
+.viewButton:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* ====== CTA bar (optional) ====== */
+.ctaBar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 430px;
+  background: var(--purple, #5b2da0);
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+.ctaButton {
+  width: 100%;
+  background: transparent;
+  color: #fff;
+  border: 0;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  font-size: 16px;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+/* Scrollbar niceties */
+.approvalsList,
+.categoryTabs {
+  scrollbar-width: thin;
+}
+.approvalsList::-webkit-scrollbar,
+.categoryTabs::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.approvalsList::-webkit-scrollbar-thumb,
+.categoryTabs::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+/* ====== Responsive tweaks ====== */
+@media (max-width: 640px) {
+  .header {
+    padding: 14px;
+  }
+  .headerTitle {
+    font-size: 20px;
+  }
+  .categoryName {
+    font-size: 20px;
+  }
+  .cardBody {
+    padding: 14px;
+  }
+  .categoryCount {
+    margin-left: 8px;
+  }
+  .approvalId,
+  .approvalDate {
+    font-size: 13px;
+  }
+  .fieldValue {
+    font-size: 15px;
+  }
+  .fieldValueAmount {
+    font-size: 16px;
+  }
+  .viewButton {
+    width: 40px;
+    height: 40px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
+@media (max-width: 420px) {
+  .cardGrid {
+    grid-template-columns: 1fr 110px;
+  }
+  .fieldValue {
+    font-size: 16px;
+  }
+  .fieldValuePlant {
+    font-size: 18px;
+  }
+  .fieldValueAmount {
+    font-size: 18px;
+  }
+  .viewButton {
+    width: 40px;
+    height: 40px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
